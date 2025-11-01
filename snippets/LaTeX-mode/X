@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: block comment
+# uuid: latex-block-comment
+# key: X
+# condition: t
+# \\iffalse
+# \\fi

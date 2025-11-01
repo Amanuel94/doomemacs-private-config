@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Inherited View XML
+# key: odoo/inherited-view
+# --
+<record id="" model="ir.ui.view">
+<field name="name"></field>
+<field name="model"></field>
+<field name="inherit_id" ref="" />
+<field name="type"></field>
+<field name="arch" type="xml">
+<xpath expr="" position="">
+</xpath>
+</field>
+</record>

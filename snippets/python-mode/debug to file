@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: debug to file 
+# key: python/debug
+# --
+from logging import FileHandler
+_debug_out = getLogger("debugger")
+_debug_out.addHandler(
+FileHandler(
+"/home/dirichletian/office/Betolo/tasks/debug.txt",
+mode=777)
+)
+

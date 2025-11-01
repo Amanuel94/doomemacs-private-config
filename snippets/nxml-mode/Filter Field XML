@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Filter Field XML
+# key: odoo/filter.field.xml
+# --
+<fileter name="" string=""  domain="[()]"/>
