@@ -45,10 +45,11 @@
 ;; require
 (require 'acp)
 (require 'agent-shell)
-(require 'org-bullets)
 (use-package org-bullets
   :load-path "~/.config/doom/lisp/"
-  )
+  :hook (org-mode . org-bullets-mode)
+  :config
+  (setq org-bullets-bullet-list '("•" "◦" "▪" "✸")))
 
 ;; c-lsp
 (after! c-ts-mode
