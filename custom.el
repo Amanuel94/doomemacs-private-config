@@ -5,8 +5,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(0x0 almost-mono-themes consult-tex general golden-ratio gptel leetcode oj
-     org-fragtog org-gcal org-journal org-latex-impatient org-roam-ui
+   '(0x0 almost-mono-themes consult-tex counsel general golden-ratio gptel leetcode
+     oj org-fragtog org-gcal org-journal org-latex-impatient org-roam-ui
      org-tag-beautify pyenv-mode tikz)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

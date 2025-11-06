@@ -39,9 +39,21 @@
 ;; (setq doom-theme 'doom-horizon)
 ;; (setq doom-theme 'doom-henna)
 
+;; paths
+(add-to-list 'load-path "~/.config/doom/lisp/") 
+
 ;; require
 (require 'acp)
 (require 'agent-shell)
+(require 'org-bullets)
+(use-package org-bullets
+  :load-path "~/.config/doom/lisp/"
+  )
+
+;; c-lsp
+(after! c-ts-mode
+  ;; Remap traditional major modes to Tree-sitter versions
+  (setq major-mode-remap-alist '((c-mode . c-ts-mode))))
 
 ;; display-side-numbers
 (setq display-line-numbers-width 2)
@@ -78,7 +90,7 @@
  (set-face-attribute 'org-meta-line nil :foreground "#708090")
  (set-face-attribute 'org-document-info-keyword nil :foreground "#f5f5dc")
  (set-face-attribute 'org-headline-done nil :foreground "#008b8b")
- (set-face-attribute 'org-inline-src-block nil :foreground "#6a5acd")
+ (set-face-attribute 'org-code nil :foreground "#6a5acd")
 (setq org-latex-create-formula-image-program 'dvisvgm)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
 )
@@ -377,3 +389,6 @@ TIME should be either a time value or a date-time string."
                    (acp-make-client :command "gemini"
                                     :command-params '("--experimental-acp")
                                     :environment-variables (list (format "GEMINI_API_KEY=%s" (agent-shell-google-key)))))))
+
+;; misc
+(setq blink-cursor-mode t);
