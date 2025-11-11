@@ -49,7 +49,7 @@
   :load-path "~/.config/doom/lisp/"
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '("•" "◦" "▪" "✸")))
+  (setq org-bullets-bullet-list '(">" "◦" "▪" "✸")))
 
 ;; c-lsp
 (after! c-ts-mode
@@ -95,6 +95,22 @@
 (setq org-latex-create-formula-image-program 'dvisvgm)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
 )
+
+
+(defun increase-org-frag-mode-font-size ()
+  (interactive)
+        (setq cur-size (plist-get org-format-latex-options :scale))
+        (if (eq major-mode 'org-mode)
+        (setq org-format-latex-options (plist-put org-format-latex-options :scale (+ cur-size 0.5))))
+)
+
+(defun decrease-org-frag-mode-font-size ()
+  (interactive)
+        (setq cur-size (plist-get org-format-latex-options :scale))
+        (if (eq major-mode 'org-mode)
+        (setq org-format-latex-options (plist-put org-format-latex-options :scale (- cur-size 0.5))))
+)
+
 
 (defun collapse-org-headings ()
   (org-cycle-global 1)
