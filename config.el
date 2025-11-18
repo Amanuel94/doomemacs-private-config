@@ -49,7 +49,7 @@
   :load-path "~/.config/doom/lisp/"
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '(">" "◦" "▪" "✸")))
+  (setq org-bullets-bullet-list '(">" "＊" "▪" "✸")))
 
 ;; c-lsp
 (after! c-ts-mode
@@ -408,4 +408,17 @@ TIME should be either a time value or a date-time string."
                                     :environment-variables (list (format "GEMINI_API_KEY=%s" (agent-shell-google-key)))))))
 
 ;; misc
-(setq blink-cursor-mode t);
+;; ==========
+(blink-cursor-mode t)
+;; fix W293 pylsp
+(defun fix-pylsp-W293-warning ()
+  (interactive)
+  (if (eq major-mode 'python-mode)
+      (doom-file-write (buffer-file-name) (s-join "\n" (mapcar #'s-trim-right
+                                                (vc--read-lines (buffer-file-name))))
+                       :append nil
+      )))
+
+
+
+
