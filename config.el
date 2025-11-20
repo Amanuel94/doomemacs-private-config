@@ -112,21 +112,27 @@
 )
 
 
+(defun set-org-frag-mode-font-size (a)
+  (interactive "N")
+        (if (eq major-mode 'org-mode)
+        (setq org-format-latex-options (plist-put org-format-latex-options :scale a))
+))
+
+
 (defun collapse-org-headings ()
   (org-cycle-global 1)
 )
 (add-hook 'org-mode-hook 'collapse-org-headings)
 
 
-(setq opacity 95)
-(setq display-line-numbers-type 'relative)
-(let* ((opacity-parameter-name
-        (if (eq window-system 'pgtk)
-        'alpha-background
-        'alpha))
-        (param-list `((,opacity-parameter-name . ,opacity))))
-
-(modify-all-frames-parameters param-list))
+;; (setq opacity 95)
+;; (setq display-line-numbers-type 'relative)
+;; (let* ((opacity-parameter-name
+;;         (if (eq window-system 'pgtk)
+;;         'alpha-background
+;;         'alpha))
+;;         (param-list `((,opacity-parameter-name . ,opacity))))
+;; (modify-all-frames-parameters param-list))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -405,7 +411,7 @@ TIME should be either a time value or a date-time string."
    :client-maker (lambda ()
                    (acp-make-client :command "gemini"
                                     :command-params '("--experimental-acp")
-                                    :environment-variables (list (format "GEMINI_API_KEY=%s" (agent-shell-google-key)))))))
+                                    :environment-variables (agent-shell-make-environment-variables :load-env "~/.config/doom/.env")))))
 
 ;; misc
 ;; ==========

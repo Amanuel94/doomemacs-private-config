@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: org-frag-mode scale 
+# key: org-frag-scale
+# --
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))

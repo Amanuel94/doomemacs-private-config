@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Notification Action Odoo 
+# key: odoo/pop-up-notify-user
+# --
+return {
+'type': 'ir.actions.client',
+'tag': 'display_notification',
+'params': {
+'title': '',
+'message': '',
+'type': 'success',
+'sticky': ,
+}
+}
