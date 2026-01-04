@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-font (font-spec :family "Iosevka Term SS07" :size 12 :weight 'Regular)
+     doom-variable-pitch-font (font-spec :family "MathJax_Typewriter" :size 12))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -35,7 +35,8 @@
 ;; (setq doom-theme 'doom-one)
 ;; (setq doom-theme 'modus-vivendi-tinted)
 ;; (setq doom-theme 'modus-vivendi-tritanopia)
-(setq doom-theme 'gruber-darker)
+(setq doom-theme 'doom-ir-black)
+;; (setq doom-theme 'gruber-darker)
 ;; (setq doom-theme 'doom-horizon)
 ;; (setq doom-theme 'doom-henna)
 
@@ -49,11 +50,10 @@
   :load-path "~/.config/doom/lisp/"
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '(">" "＊" "▪" "✸")))
+  (setq org-bullets-bullet-list '(">" "⮞" "🟄" "⪢")))
 
 ;; c-lsp
 (after! c-ts-mode
-  ;; Remap traditional major modes to Tree-sitter versions
   (setq major-mode-remap-alist '((c-mode . c-ts-mode))))
 
 ;; display-side-numbers
@@ -125,8 +125,8 @@
 (add-hook 'org-mode-hook 'collapse-org-headings)
 
 
+(setq display-line-numbers-type 'relative)
 ;; (setq opacity 95)
-;; (setq display-line-numbers-type 'relative)
 ;; (let* ((opacity-parameter-name
 ;;         (if (eq window-system 'pgtk)
 ;;         'alpha-background
@@ -334,9 +334,9 @@ TIME should be either a time value or a date-time string."
 
 ;; embark
 ;; The default C-; is used for switching xfce workspaces
+(define-key global-map (kbd "C-:") #'embark-act)
+(define-key global-map (kbd "C-\"") #'embark-export)
 (after! embark
- (define-key global-map (kbd "C-:") #'embark-act)
- (define-key global-map (kbd "C-\"") #'embark-export)
  (eval-when-compile
    (defmacro my/embark-ace-action (fn)
      `(defun ,(intern (concat "my/embark-ace-" (symbol-name fn))) ()
@@ -413,9 +413,17 @@ TIME should be either a time value or a date-time string."
                                     :command-params '("--experimental-acp")
                                     :environment-variables (agent-shell-make-environment-variables :load-env "~/.config/doom/.env")))))
 
+
+;; timer
+(setq chronos-notification-wav "~/thirdparty/sounds/timer.wav")
+(add-hook! 'chronos-expiry-functions #'chronos-sound-notify #'chronos-desktop-notifications-notify)
+
+
 ;; misc
 ;; ==========
 (blink-cursor-mode t)
+(setq +zen-text-scale 1.1)
+
 ;; fix W293 pylsp
 (defun fix-pylsp-W293-warning ()
   (interactive)
@@ -425,6 +433,18 @@ TIME should be either a time value or a date-time string."
                        :append nil
       )))
 
+;; dashboard
 
+(defun fix-noqa (a) 
+        (interactive "s")
+        (end-of-line)
+        (let* ((x a)
+               (args (append '("  # noqa: ") (list x))))
+        (insert (s-join "" args)))
+)
 
-
+(define-key evil-normal-state-map (kbd "SPC i n") #'fix-noqa) 
+(define-key evil-normal-state-map (kbd "SPC i g") #'golden-ratio-mode)
+(define-key evil-insert-state-map (kbd "C-x C-s") #'save-buffer)
+(define-key evil-insert-state-map (kbd "C-S-f") #'forward-line)
+(define-key evil-insert-state-map (kbd "C-S-b") #'ibuffer-backward-line)

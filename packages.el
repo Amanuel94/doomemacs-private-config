@@ -52,7 +52,6 @@
 (package! tldr)
 (package! gruber-darker-theme)
 (package! aidermacs)
-(package! almost-mono-themes)
 (package! general)
 (package! 0x0)
 (package! org-fragtog)
@@ -64,3 +63,15 @@
 (package! shell-maker)
 (package! acp :recipe (:host github :repo "xenodium/acp.el"))
 (package! agent-shell :recipe (:host github :repo "xenodium/agent-shell"))
+(package! gptel)
+(package! sage-shell-mode)
+;; (package! lean4-mode
+;;   :recipe (:host github
+;;            :repo "leanprover-community/lean4-mode"
+;;            :files ("*.el" "data")))
+
+(package! typst-ts-mode :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
+(package! exwm)
+(package! chronos)
+(package! helm-chronos)
+(package! mw-thesaurus)
