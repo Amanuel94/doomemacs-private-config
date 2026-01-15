@@ -157,6 +157,11 @@
 ;; Example keybinding: C-c C-n
 (global-set-key (kbd "M-n") 'capture-current-todo-as-next)
 
+
+;; kbd for gtd file
+(defun org-open-gtd () (interactive) (org-open-file (concat org-directory "gtd.org")))
+(define-key evil-normal-state-map (kbd "SPC e t")  #'org-open-gtd)
+
 (after! org
   (dolist (tpl
            '(("i" "Idea" entry
@@ -443,8 +448,22 @@ TIME should be either a time value or a date-time string."
         (insert (s-join "" args)))
 )
 
+(defun copy-line-above ()
+  (interactive)
+  (forward-line -1)
+  (setq line (buffer-substring (line-beginning-position) (line-end-position)))
+  (open-line 1)
+  (insert line)
+  (forward-line 1)
+  (beginning-of-line)
+)
+(keymap-global-set "C-x l" #'copy-line-above)
+
 (define-key evil-normal-state-map (kbd "SPC i n") #'fix-noqa) 
 (define-key evil-normal-state-map (kbd "SPC i g") #'golden-ratio-mode)
 (define-key evil-insert-state-map (kbd "C-x C-s") #'save-buffer)
 (define-key evil-insert-state-map (kbd "C-S-f") #'forward-line)
 (define-key evil-insert-state-map (kbd "C-S-b") #'ibuffer-backward-line)
+(define-key evil-normal-state-map (kbd "SPC e e d") #'powerthesaurus-hydra/powerthesaurus-lookup-definitions-dwim-and-exit)
+(define-key evil-normal-state-map (kbd "SPC e l") #'avy-copy-line)
+(define-key evil-normal-state-map (kbd "SPC e r") #'avy-copy-region)

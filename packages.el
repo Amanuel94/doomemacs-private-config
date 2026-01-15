@@ -74,4 +74,4 @@
 (package! exwm)
 (package! chronos)
 (package! helm-chronos)
-(package! mw-thesaurus)
+(package! powerthesaurus)

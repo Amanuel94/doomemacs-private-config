@@ -10,8 +10,8 @@
    '(0x0 alarm-clock almost-mono-themes chronos consult-tex copilot-chat counsel
      exwm flycheck-grammarly general golden-ratio gptel gptel-agent helm-chronos
      helm-dictionary leetcode mmm-mode mw-thesaurus oj org-fragtog org-gcal
-     org-journal org-latex-impatient org-roam-ui org-tag-beautify pyenv-mode
-     tikz vterm writegood-mode)))
+     org-journal org-latex-impatient org-roam-ui org-tag-beautify powerthesaurus
+     pyenv-mode tikz vterm writegood-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
