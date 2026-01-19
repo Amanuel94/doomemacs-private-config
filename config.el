@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Iosevka Term SS07" :size 12 :weight 'Regular)
-     doom-variable-pitch-font (font-spec :family "MathJax_Typewriter" :size 12))
+     doom-variable-pitch-font (font-spec :family "Iosevka Etoile" :size 12))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -278,6 +278,17 @@ TIME should be either a time value or a date-time string."
 
 ;; (add-hook 'after-save-hook 'grad-tracker-repopulate-table)
  (define-key global-map (kbd "C-c C-r") #'grad-tracker-repopulate-table)
+
+;; mainining word count for essays
+;; TODO: move the cursor back to the editing position instead of the heading
+(defun org-count-words ()
+  (interactive)
+  (when (eq major-mode 'org-mode)
+    (org-set-property "WORD-COUNT" (int-to-string
+                                  (apply 'count-words-region (take 2 (evil-org-inner-subtree))))))
+  )
+
+(add-hook 'after-save-hook #'org-count-words)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
