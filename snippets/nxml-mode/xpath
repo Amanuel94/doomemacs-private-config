@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: xpath  
+# key: odoo/xpath
+# --
+<xpath expr="" position="">
+</xpath>

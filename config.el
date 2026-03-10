@@ -20,10 +20,15 @@
 ;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
-;;
-(setq doom-font (font-spec :family "Iosevka Term SS07" :size 12 :weight 'Regular)
-     doom-variable-pitch-font (font-spec :family "Iosevka Etoile" :size 12))
-;;
+
+;; Fantasque Sans Mono
+;; Iosevaka Term SS07
+;; Iosevaka Fixed SS02
+
+(setq doom-font (font-spec :family "Iosevka Fixed SS08" :size 14 :weight 'Regular)
+     doom-variable-pitch-font (font-spec :family "Myna" :size 14))
+;; (setq doom-font (font-spec :family "Fantasque Sans Mono" :size 13 :weight 'Regular)
+;;      doom-variable-pitch-font (font-spec :family "Myna" :size 12))
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
@@ -35,17 +40,55 @@
 ;; (setq doom-theme 'doom-one)
 ;; (setq doom-theme 'modus-vivendi-tinted)
 ;; (setq doom-theme 'modus-vivendi-tritanopia)
-(setq doom-theme 'doom-ir-black)
+;; (setq doom-theme 'doom-ir-black)
 ;; (setq doom-theme 'gruber-darker)
 ;; (setq doom-theme 'doom-horizon)
 ;; (setq doom-theme 'doom-henna)
+;; (setq doom-theme 'doom-moonlight)
+;; (setq doom-theme 'doom-wilmersdorf)
+;; (setq doom-theme 'doom-acario-light)
+;; (setq light-theme 'doom-tomorrow-day)
+
+;; (setq light-theme 'doom-acario-light)
+(setq light-theme 'hemera)
+;; (setq light-theme 'dakrone-light)
+
+;; (setq dark-theme 'doom-wilmersdorf)
+;; (setq dark-theme 'dakrone)
+(setq dark-theme 'doom-monokai-machine)
+
+(let ((time-now (string-to-number (format-time-string "%H" (current-time)))))
+ (if (> (mod (- time-now 6) 24) 12) ;; 19 - 06 use dark mode
+     (setq doom-theme dark-theme)
+   (setq doom-theme light-theme)
+))
+ 
 
 ;; paths
 (add-to-list 'load-path "~/.config/doom/lisp/") 
+(load-env-vars "~/.config/doom/.env")
+
+;; gcalendar google
+(setq plstore-cache-passphrase-for-symmetric-encryption t)
+
+(setq GCAL_CLIENT_ID (getenv "GCAL_CLIENT_ID")) 
+(setq GCAL_CLIENT_SECRET (getenv "GCAL_CLIENT_SECRET")) 
+
+(setq org-gcal-client-id GCAL_CLIENT_ID
+      org-gcal-client-secret GCAL_CLIENT_SECRET 
+      org-gcal-fetch-file-alist '(("amanueltewodros94@gmail.com" .  "~/org/cal.org")))
+(setq org-gcal-down-days 15)
+(setq org-gcal-up-days 15)
+(setq org-gcal-recurring-events-mode 'top-level)
+(define-key evil-normal-state-map (kbd "SPC h r c") #'org-gcal-sync)
+(define-key evil-normal-state-map (kbd "SPC h r o") #'org-gcal-post-at-point)
+
 
 ;; require
 (require 'acp)
 (require 'agent-shell)
+(require 'org-gcal)
+
 (use-package org-bullets
   :load-path "~/.config/doom/lisp/"
   :hook (org-mode . org-bullets-mode)
@@ -60,6 +103,7 @@
 (setq display-line-numbers-width 2)
 (set-face-attribute 'line-number nil :background nil)
 
+;; gruber-darker
 (custom-theme-set-faces! 'gruber-darker
      '(diredfl-dir-name :foreground "#708090")
      '(diredfl-file-suffix :foreground "#708090")
@@ -76,6 +120,12 @@
 
      (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal)
 )
+
+;; doom-acario-ligth
+(after! org
+  (custom-theme-set-faces! 'doom-acario-light
+    '(org-document-info-keyword :foreground "#000000")
+))
 
 ;; org
 ;; make org-headlines unbold
@@ -124,6 +174,17 @@
 )
 (add-hook 'org-mode-hook 'collapse-org-headings)
 
+;; turn to org src block
+(defun turn-to-org-src-block (a)
+  (interactive "s")
+  (let* ((reg-s (region-beginning))
+        (reg-e (region-end)))
+        (goto-char reg-e)
+        (insert "\n#+END_SRC")
+        (goto-char reg-s)
+        (forward-line -1)
+        (insert (concat "#+BEGIN_SRC " a "\n")))
+)
 
 (setq display-line-numbers-type 'relative)
 ;; (setq opacity 95)
@@ -131,7 +192,7 @@
 ;;         (if (eq window-system 'pgtk)
 ;;         'alpha-background
 ;;         'alpha))
-;;         (param-list `((,opacity-parameter-name . ,opacity))))
+;;         (param-list `((,opacity-parameter-name . ,opacity)))
 ;; (modify-all-frames-parameters param-list))
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -283,12 +344,13 @@ TIME should be either a time value or a date-time string."
 ;; TODO: move the cursor back to the editing position instead of the heading
 (defun org-count-words ()
   (interactive)
-  (when (eq major-mode 'org-mode)
+  (when (and (eq major-mode 'org-mode) (-contains? (doom-active-minor-modes) 'org-count-words-mode))
     (org-set-property "WORD-COUNT" (int-to-string
                                   (apply 'count-words-region (take 2 (evil-org-inner-subtree))))))
   )
 
 (add-hook 'after-save-hook #'org-count-words)
+(define-minor-mode org-count-words-mode "Org Word Counter Mode" :init-value nil)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -417,7 +479,7 @@ TIME should be either a time value or a date-time string."
   (interactive)
   (agent-shell--start
    :new-session t
-   :mode-line-name "Gemini"
+   :mode-line-name :new-session "Gemini"
    :buffer-name "Gemini"
    :shell-prompt "Gemini> "
    :shell-prompt-regexp "Gemini> "
@@ -429,10 +491,16 @@ TIME should be either a time value or a date-time string."
                                     :command-params '("--experimental-acp")
                                     :environment-variables (agent-shell-make-environment-variables :load-env "~/.config/doom/.env")))))
 
+;; qwen code
+(setq agent-shell-qwen-authentication
+      (agent-shell-qwen-make-authentication :login t))
 
 ;; timer
 (setq chronos-notification-wav "~/thirdparty/sounds/timer.wav")
 (add-hook! 'chronos-expiry-functions #'chronos-sound-notify #'chronos-desktop-notifications-notify)
+
+;; python
+;; (setq lsp-disabled-clients '(pylsp))
 
 
 ;; misc

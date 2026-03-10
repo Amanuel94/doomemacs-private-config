@@ -47,31 +47,47 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
-(package! evil-tutor)
-(package! auctex)
 (package! tldr)
-(package! gruber-darker-theme)
-(package! aidermacs)
 (package! general)
 (package! 0x0)
-(package! org-fragtog)
-(package! tikz)
-(package! org-roam)
-(package! org-roam-ui)
-(package! golden-ratio)
-(package! leetcode)
+
+;; agentic
 (package! shell-maker)
 (package! acp :recipe (:host github :repo "xenodium/acp.el"))
 (package! agent-shell :recipe (:host github :repo "xenodium/agent-shell"))
 (package! gptel)
+
+;; math 
 (package! sage-shell-mode)
 ;; (package! lean4-mode
 ;;   :recipe (:host github
 ;;            :repo "leanprover-community/lean4-mode"
 ;;            :files ("*.el" "data")))
 
+;; language support and lsp
+(package! auctex)
 (package! typst-ts-mode :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
-(package! exwm)
-(package! chronos)
-(package! helm-chronos)
+(package! editorconfig)
+(package! org-fragtog)
+(package! tikz)
+
+;; productivity
+(package! org-gcal)
 (package! powerthesaurus)
+(package! org-roam)
+(package! org-roam-ui)
+
+;; light themes
+(package! aircon-theme)
+(package! dakrone-light-theme)
+(package! hemera-theme)
+(package! silkworm-theme)
+
+;; dark themes
+(package! gruber-darker-theme)
+(package! dakrone-theme)
+
+;; gimmicks
+(package! dad-joke)
+(package! golden-ratio)
+(package! evil-tutor)
