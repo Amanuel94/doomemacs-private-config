@@ -62,6 +62,31 @@
      (setq doom-theme dark-theme)
    (setq doom-theme light-theme)
 ))
+
+
+(defun customize-dired-theme (theme color)
+  "Customize dired faces with less contrast."
+  (custom-theme-set-faces!
+   theme
+   `(diredfl-dir-name :foreground ,color)
+   `(diredfl-file-suffix :foreground ,color)
+   `(diredfl-mode :foreground ,color)
+   `(diredfl-number :foreground ,color)
+   `(diredfl-read-priv :foreground unspecified)
+   `(diredfl-write-priv :foreground unspecified)
+   `(diredfl-exec-priv :foreground unspecified)
+   `(diredfl-date-time :foreground unspecified)
+   `(diredfl-no-priv :foreground unspecified)
+   `(diredfl-file-name :foreground unspecified)
+   `(diredfl-dir-heading :underline unspecified)
+   `(diredfl-dir-priv :foreground unspecified))
+
+  (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal))
+
+;; (customize-dired-theme 'gruber-darker "#708090")
+;; (customize-dired-theme 'hemera "#000000")
+(customize-dired-theme 'dakrone-light "#007700")
+
  
 
 ;; paths
@@ -103,23 +128,6 @@
 (setq display-line-numbers-width 2)
 (set-face-attribute 'line-number nil :background nil)
 
-;; gruber-darker
-(custom-theme-set-faces! 'gruber-darker
-     '(diredfl-dir-name :foreground "#708090")
-     '(diredfl-file-suffix :foreground "#708090")
-     '(diredfl-mode :foreground "#708090")
-     '(diredfl-number :foreground "#708090")
-     '(diredfl-read-priv :foreground unspecified)
-     '(diredfl-write-priv :foreground unspecified)
-     '(diredfl-exec-priv :foreground unspecified)
-     '(diredfl-date-time :foreground unspecified)
-     '(diredfl-no-priv :foreground unspecified)
-     '(diredfl-file-name :foreground unspecified)
-     '(diredfl-dir-heading :underline unspecified)
-     '(diredfl-dir-priv :foreground unspecified)
-
-     (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal)
-)
 
 ;; doom-acario-ligth
 (after! org
