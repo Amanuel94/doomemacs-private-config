@@ -50,8 +50,8 @@
 ;; (setq light-theme 'doom-tomorrow-day)
 
 ;; (setq light-theme 'doom-acario-light)
-(setq light-theme 'hemera)
-;; (setq light-theme 'dakrone-light)
+;; (setq light-theme 'hemera)
+(setq light-theme 'dakrone-light)
 
 ;; (setq dark-theme 'doom-wilmersdorf)
 ;; (setq dark-theme 'dakrone)
@@ -86,6 +86,9 @@
 ;; (customize-dired-theme 'gruber-darker "#708090")
 ;; (customize-dired-theme 'hemera "#000000")
 (customize-dired-theme 'dakrone-light "#007700")
+
+(custom-theme-set-faces! 'dakrone-light
+'(font-lock-string-face :background "#f5f5f5" :foreground "#440044"))
 
  
 
@@ -348,8 +351,13 @@ TIME should be either a time value or a date-time string."
 ;; (add-hook 'after-save-hook 'grad-tracker-repopulate-table)
  (define-key global-map (kbd "C-c C-r") #'grad-tracker-repopulate-table)
 
+
+(define-minor-mode org-count-words-mode "Org Word Counter Mode" :init-value nil)
+(define-minor-mode org-live-babel-mode "Execute Babel on Change" :init-value nil)
+
 ;; mainining word count for essays
 ;; TODO: move the cursor back to the editing position instead of the heading
+
 (defun org-count-words ()
   (interactive)
   (when (and (eq major-mode 'org-mode) (-contains? (doom-active-minor-modes) 'org-count-words-mode))
@@ -357,8 +365,16 @@ TIME should be either a time value or a date-time string."
                                   (apply 'count-words-region (take 2 (evil-org-inner-subtree))))))
   )
 
+(defun org-exec-babel-on-change ()
+  (interactive)
+  (when (and (eq major-mode 'org-mode) (-contains? (doom-active-minor-modes) 'org-live-babel-mode))
+  (org-babel-execute-buffer)
+))
+
 (add-hook 'after-save-hook #'org-count-words)
-(define-minor-mode org-count-words-mode "Org Word Counter Mode" :init-value nil)
+(add-hook 'after-save-hook #'org-exec-babel-on-change)
+
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.

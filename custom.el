@@ -11,9 +11,10 @@
    '(0x0 aircon-theme airline-themes alarm-clock almost-mono-themes chronos
      consult-tex copilot-chat counsel dakrone-light-theme dakrone-theme exwm
      flycheck-grammarly general golden-ratio gptel gptel-agent helm-chronos
-     helm-dictionary hemera-theme leetcode mmm-mode mw-thesaurus oj org-fragtog
-     org-gcal org-journal org-latex-impatient org-roam-ui org-tag-beautify
-     powerthesaurus pyenv-mode silkworm-theme tikz vterm writegood-mode)))
+     helm-dictionary hemera-theme leetcode mmm-mode mw-thesaurus oj
+     org-elisp-help org-fragtog org-gcal org-journal org-latex-impatient
+     org-roam-ui org-tag-beautify powerthesaurus pyenv-mode silkworm-theme tikz
+     vterm writegood-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
