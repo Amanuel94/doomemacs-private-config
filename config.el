@@ -24,16 +24,38 @@
 ;; Fantasque Sans Mono
 ;; Iosevaka Term SS07
 ;; Iosevaka Fixed SS02
+;; Iosevka Fixed SS08
+;; Myna
+;; JetBrains Mono
+;; Hasklug Nerd Font
 
-(setq doom-font (font-spec :family "Iosevka Fixed SS08" :size 14 :weight 'Regular)
-     doom-variable-pitch-font (font-spec :family "Myna" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 13 :weight 'Regular)
+     doom-variable-pitch-font (font-spec :family "Myna" :size 14) doom-serif-font (font-spec :family "Myna" :size 14) )
 ;; (setq doom-font (font-spec :family "Fantasque Sans Mono" :size 13 :weight 'Regular)
 ;;      doom-variable-pitch-font (font-spec :family "Myna" :size 12))
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
+;;
+;;ligatures
 
+;; Enable the www ligature in every possible major mode
+(ligature-set-ligatures 't '("www"))
+
+;; Enable ligatures in programming modes                                                           
+(ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+
+(global-ligature-mode 't)
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -55,7 +77,8 @@
 
 ;; (setq dark-theme 'doom-wilmersdorf)
 ;; (setq dark-theme 'dakrone)
-(setq dark-theme 'doom-monokai-machine)
+;; (setq dark-theme 'doom-monokai-machine)
+(setq dark-theme 'doom-monokai-octagon)
 
 (let ((time-now (string-to-number (format-time-string "%H" (current-time)))))
  (if (> (mod (- time-now 6) 24) 12) ;; 19 - 06 use dark mode
@@ -88,6 +111,7 @@
 (customize-dired-theme 'dakrone-light "#007700")
 
 (custom-theme-set-faces! 'dakrone-light
+'(org-agenda-structure :family (font-spec :family "MathJax_SansSerif" :weight 'Regular))
 '(font-lock-string-face :background "#f5f5f5" :foreground "#440044"))
 
  
@@ -121,7 +145,8 @@
   :load-path "~/.config/doom/lisp/"
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '(">" "⮞" "🟄" "⪢")))
+  ;; (setq org-bullets-bullet-list '(">" "⮞" "🟄" "⪢")))
+  (setq org-bullets-bullet-list '(">" ">" "." ">")))
 
 ;; c-lsp
 (after! c-ts-mode
@@ -140,7 +165,6 @@
 
 ;; org
 ;; make org-headlines unbold
-(after! org
  (set-face-attribute 'org-level-1 nil :weight 'normal)
  (set-face-attribute 'org-level-2 nil :weight 'normal)
  (set-face-attribute 'org-level-3 nil :weight 'normal)
@@ -155,7 +179,6 @@
  (set-face-attribute 'org-code nil :foreground "#6a5acd")
 (setq org-latex-create-formula-image-program 'dvisvgm)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
-)
 
 
 (defun increase-org-frag-mode-font-size ()
@@ -219,6 +242,8 @@
             ,(concat "* [ ] " text "\n")))))
     (org-capture nil "N")))
 
+
+
 (defun capture-current-todo-as-next ()
   "Capture the current TODO headline as a 'Next' task."
   (interactive)
@@ -255,6 +280,10 @@
              ("N" "Next" entry
               (file+headline "~/org/gtd.org" "Next")
               "* [ ] %?")
+
+             ("S" "Store" entry
+              (file "~/org/store.org")
+              "* %?")
 
              ("R" "Read" entry
               (file+headline "~/org/reading.list.org" "inbox")
@@ -531,6 +560,7 @@ TIME should be either a time value or a date-time string."
 ;; ==========
 (blink-cursor-mode t)
 (setq +zen-text-scale 1.1)
+(global-flycheck-mode 0)
 
 ;; fix W293 pylsp
 (defun fix-pylsp-W293-warning ()
@@ -540,8 +570,6 @@ TIME should be either a time value or a date-time string."
                                                 (vc--read-lines (buffer-file-name))))
                        :append nil
       )))
-
-;; dashboard
 
 (defun fix-noqa (a) 
         (interactive "s")
@@ -570,3 +598,10 @@ TIME should be either a time value or a date-time string."
 (define-key evil-normal-state-map (kbd "SPC e e d") #'powerthesaurus-hydra/powerthesaurus-lookup-definitions-dwim-and-exit)
 (define-key evil-normal-state-map (kbd "SPC e l") #'avy-copy-line)
 (define-key evil-normal-state-map (kbd "SPC e r") #'avy-copy-region)
+
+;; magit/forge
+;; (with-eval-after-load 'magit
+;;   (require 'forge))
+;; (setq auth-sources '("~/.authinfo"))
+(setq-default vterm-shell "/usr/bin/fish")
+(setq-default explicit-shell-file-name "/usr/bin/fish")

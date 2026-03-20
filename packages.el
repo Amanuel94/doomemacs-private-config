@@ -48,6 +48,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 (package! tldr)
+
 (package! general)
 (package! 0x0)
 
@@ -76,6 +77,7 @@
 (package! powerthesaurus)
 (package! org-roam)
 (package! org-roam-ui)
+(package! org-alert)
 
 ;; light themes
 (package! aircon-theme)
@@ -91,3 +93,11 @@
 (package! dad-joke)
 (package! golden-ratio)
 (package! evil-tutor)
+
+;; leetcode
+(package! leetcode)
+(package! ligature)
+
+;; git
+;; (package! forge)
+;; (package! consult-gh-forge)

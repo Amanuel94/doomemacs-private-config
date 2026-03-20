@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: python assert return type 
+# key: python/assert-return-type 
+# --
+assert isinstance(x, )
+assert isinstance(k, )
+
+def assert_return_type(return_val):
+    nonlocal x, k
+    xTypes = []
+    kTypes = []
+    expected_return_types = []
+
+    for xType, kType, expected_return_type in zip(xTypes, kTypes, expected_return_types):
+        if isinstance(x, xType) and isinstance(k, kType):
+            assert isinstance(return_val, expected_return_type)
+    return return_val
