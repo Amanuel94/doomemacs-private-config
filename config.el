@@ -28,18 +28,29 @@
 ;; Myna
 ;; JetBrains Mono
 ;; Hasklug Nerd Font
+;; CascdiaCode
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 13 :weight 'Regular)
+(setq doom-font (font-spec :family "Iosevka NFM" :size 13 :weight 'Regular)
      doom-variable-pitch-font (font-spec :family "Myna" :size 14) doom-serif-font (font-spec :family "Myna" :size 14) )
-;; (setq doom-font (font-spec :family "Fantasque Sans Mono" :size 13 :weight 'Regular)
-;;      doom-variable-pitch-font (font-spec :family "Myna" :size 12))
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-;;
-;;ligatures
 
+(setq doom-fontsets `("Fantasque Sans Mono"
+                       "Iosevaka Term SS07"
+                       "Iosevaka Fixed SS02"
+                       "Iosevka Fixed SS08"
+                       "Myna"
+                       "JetBrains Mono"
+                       "Hasklug Nerd Font"
+                       "Iosevka NFM"
+                       "CascdiaCode"))
+
+(defun doom/set-font ()
+  (interactive)
+  (let* ((font-name (completing-read "Select Font: " doom-fontsets nil 'confirm)))
+  (setq doom-font (font-spec :family font-name :size 13 :weight 'Regular)))
+  (doom-init-fonts-h 'reload)
+ )
+
+;;ligatures
 ;; Enable the www ligature in every possible major mode
 (ligature-set-ligatures 't '("www"))
 
