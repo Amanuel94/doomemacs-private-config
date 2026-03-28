@@ -30,8 +30,8 @@
 ;; Hasklug Nerd Font
 ;; CascdiaCode
 
-(setq doom-font (font-spec :family "Iosevka NFM" :size 13 :weight 'Regular)
-     doom-variable-pitch-font (font-spec :family "Myna" :size 14) doom-serif-font (font-spec :family "Myna" :size 14) )
+(setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14)
+      doom-serif-font (font-spec :family "JetBrains Mono" :size 14))
 
 (setq doom-fontsets `("Fantasque Sans Mono"
                        "Iosevaka Term SS07"
@@ -41,7 +41,7 @@
                        "JetBrains Mono"
                        "Hasklug Nerd Font"
                        "Iosevka NFM"
-                       "CascdiaCode"))
+                       "CascadiaCode"))
 
 (defun doom/set-font ()
   (interactive)
@@ -84,12 +84,16 @@
 
 ;; (setq light-theme 'doom-acario-light)
 ;; (setq light-theme 'hemera)
-(setq light-theme 'dakrone-light)
+;; (setq light-theme 'dakrone-light)
+(setq light-theme 'parchment)
 
 ;; (setq dark-theme 'doom-wilmersdorf)
 ;; (setq dark-theme 'dakrone)
 ;; (setq dark-theme 'doom-monokai-machine)
-(setq dark-theme 'doom-monokai-octagon)
+;; (setq dark-theme 'doom-monokai-octagon)
+;; (setq dark-theme 'kaolin-dark)
+(setq dark-theme 'kaolin-mono-dark)
+
 
 (let ((time-now (string-to-number (format-time-string "%H" (current-time)))))
  (if (> (mod (- time-now 6) 24) 12) ;; 19 - 06 use dark mode
@@ -125,6 +129,9 @@
 '(org-agenda-structure :family (font-spec :family "MathJax_SansSerif" :weight 'Regular))
 '(font-lock-string-face :background "#f5f5f5" :foreground "#440044"))
 
+(custom-theme-set-faces! 'kaolin-mono-dark
+  '(org-code :foreground "#00ee00")
+  '(org-document-info-keyword :foreground "#90ee90"))
  
 
 ;; paths
@@ -175,7 +182,7 @@
 ))
 
 ;; org
-;; make org-headlines unbold
+;; make org-headlines weight normal
  (set-face-attribute 'org-level-1 nil :weight 'normal)
  (set-face-attribute 'org-level-2 nil :weight 'normal)
  (set-face-attribute 'org-level-3 nil :weight 'normal)
@@ -538,26 +545,16 @@ TIME should be either a time value or a date-time string."
 (setq org-babel-python-command "python3")
 
 ;; agentic
-(defun agent-shell-start-gemini-agent ()
-  "Start an interactive Gemini CLI agent shell."
-  (interactive)
-  (agent-shell--start
-   :new-session t
-   :mode-line-name :new-session "Gemini"
-   :buffer-name "Gemini"
-   :shell-prompt "Gemini> "
-   :shell-prompt-regexp "Gemini> "
-   :needs-authentication t
-   :authenticate-request-maker (lambda ()
-                                 (acp-make-authenticate-request :method-id "gemini-api-key"))
-   :client-maker (lambda ()
-                   (acp-make-client :command "gemini"
-                                    :command-params '("--experimental-acp")
-                                    :environment-variables (agent-shell-make-environment-variables :load-env "~/.config/doom/.env")))))
+(setq GEMINI_API_KEY (getenv "GEMINI_API_KEY"))
+(setq agent-shell-google-authentication
+      (agent-shell-google-make-authentication :api-key GEMINI_API_KEY))
 
 ;; qwen code
 (setq agent-shell-qwen-authentication
       (agent-shell-qwen-make-authentication :login t))
+
+;; opencode
+;; (setq agent-shell-opencode-)
 
 ;; timer
 (setq chronos-notification-wav "~/thirdparty/sounds/timer.wav")
@@ -609,10 +606,11 @@ TIME should be either a time value or a date-time string."
 (define-key evil-normal-state-map (kbd "SPC e e d") #'powerthesaurus-hydra/powerthesaurus-lookup-definitions-dwim-and-exit)
 (define-key evil-normal-state-map (kbd "SPC e l") #'avy-copy-line)
 (define-key evil-normal-state-map (kbd "SPC e r") #'avy-copy-region)
+(define-key evil-normal-state-map (kbd "SPC h r F") #'doom/set-font)
 
 ;; magit/forge
 ;; (with-eval-after-load 'magit
 ;;   (require 'forge))
-;; (setq auth-sources '("~/.authinfo"))
+(setq auth-sources '("~/.authinfo"))
 (setq-default vterm-shell "/usr/bin/fish")
 (setq-default explicit-shell-file-name "/usr/bin/fish")

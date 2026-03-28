@@ -84,6 +84,9 @@
 (package! dakrone-light-theme)
 (package! hemera-theme)
 (package! silkworm-theme)
+(package! kaolin-themes)
+(package! doric-themes)
+(package! parchment-theme)
 
 ;; dark themes
 (package! gruber-darker-theme)
@@ -100,4 +103,4 @@
 
 ;; git
 ;; (package! forge)
-;; (package! consult-gh-forge)
+(package! consult-gh-forge)
