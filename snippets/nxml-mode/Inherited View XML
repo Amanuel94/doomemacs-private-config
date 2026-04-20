@@ -2,14 +2,14 @@
 # name: Inherited View XML
 # key: odoo/inherited-view
 # --
-<record id="$1" model="ir.ui.view">
-    <field name="name">$2</field>
-    <field name="model">$3</field>
-    <field name="inherit_id" ref="$4" />
-    <field name="type">$5</field>
-    <field name="arch" type="xml">
-        <xpath expr="$6" position="$7">
-               $8
-        </xpath>
-    </field>
-</record>
+    <record id="$1" model="ir.ui.view">
+        <field name="name">$2</field>
+        <field name="model">$3</field>
+        <field name="inherit_id" ref="$4" />
+        <field name="type">$5</field>
+        <field name="arch" type="xml">
+            <xpath expr="$6" position="$7">
+                $8
+            </xpath>
+        </field>
+    </record>

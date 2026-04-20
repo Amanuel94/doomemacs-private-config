@@ -51,6 +51,8 @@
 
 (package! general)
 (package! 0x0)
+(package! ivy)
+(package! helm)
 
 ;; agentic
 (package! shell-maker)
@@ -71,6 +73,7 @@
 (package! editorconfig)
 (package! org-fragtog)
 (package! tikz)
+(package! elm-mode)
 
 ;; productivity
 (package! org-gcal)
@@ -86,7 +89,8 @@
 (package! silkworm-theme)
 (package! kaolin-themes)
 (package! doric-themes)
-(package! parchment-theme)
+(package! brutalist-theme)
+(package! eclipse-theme)
 
 ;; dark themes
 (package! gruber-darker-theme)

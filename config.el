@@ -30,23 +30,32 @@
 ;; Hasklug Nerd Font
 ;; CascdiaCode
 
+(setq home-dir "/home/dirichletian")
 (setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14)
-      doom-serif-font (font-spec :family "JetBrains Mono" :size 14))
+      doom-serif-font (font-spec :family "JetBrains Mono" :size 14)
+      doom-font (font-spec :family "CascadiaCode" :size 12))
 
 (setq doom-fontsets `("Fantasque Sans Mono"
-                       "Iosevaka Term SS07"
-                       "Iosevaka Fixed SS02"
+                       "Iosevka Term SS07"
+                       "Iosevka Fixed SS02"
                        "Iosevka Fixed SS08"
                        "Myna"
                        "JetBrains Mono"
                        "Hasklug Nerd Font"
                        "Iosevka NFM"
+                       "Fira Code"
+                       "0x Proto Nerd Font"
+                       "Agave Nerd Font"
+                       "EnvyCodeR Nerd Font"
+                       "Monoid Nerd Font Mono"
+                       "Monaspace Argon Var"
+                       "Monaspace Xenon Var"
                        "CascadiaCode"))
 
 (defun doom/set-font ()
   (interactive)
   (let* ((font-name (completing-read "Select Font: " doom-fontsets nil 'confirm)))
-  (setq doom-font (font-spec :family font-name :size 13 :weight 'Regular)))
+  (setq doom-font (font-spec :family font-name :size 10 :weight 'Regular)))
   (doom-init-fonts-h 'reload)
  )
 
@@ -85,7 +94,8 @@
 ;; (setq light-theme 'doom-acario-light)
 ;; (setq light-theme 'hemera)
 ;; (setq light-theme 'dakrone-light)
-(setq light-theme 'parchment)
+;; (setq light-theme 'parchment)
+(setq light-theme 'modus-operandi-tritanopia)
 
 ;; (setq dark-theme 'doom-wilmersdorf)
 ;; (setq dark-theme 'dakrone)
@@ -164,7 +174,7 @@
   :hook (org-mode . org-bullets-mode)
   :config
   ;; (setq org-bullets-bullet-list '(">" "⮞" "🟄" "⪢")))
-  (setq org-bullets-bullet-list '(">" ">" "." ">")))
+  (setq org-bullets-bullet-list '(">" ">" ">" ">")))
 
 ;; c-lsp
 (after! c-ts-mode
@@ -183,21 +193,23 @@
 
 ;; org
 ;; make org-headlines weight normal
- (set-face-attribute 'org-level-1 nil :weight 'normal)
- (set-face-attribute 'org-level-2 nil :weight 'normal)
- (set-face-attribute 'org-level-3 nil :weight 'normal)
- (set-face-attribute 'org-level-4 nil :weight 'normal)
- (set-face-attribute 'org-level-5 nil :weight 'normal)
- (set-face-attribute 'org-level-6 nil :weight 'normal)
- (set-face-attribute 'org-level-7 nil :weight 'normal)
- (set-face-attribute 'org-level-8 nil :weight 'normal)
- (set-face-attribute 'org-meta-line nil :foreground "#708090")
- (set-face-attribute 'org-document-info-keyword nil :foreground "#f5f5dc")
- (set-face-attribute 'org-headline-done nil :foreground "#008b8b")
- (set-face-attribute 'org-code nil :foreground "#6a5acd")
-(setq org-latex-create-formula-image-program 'dvisvgm)
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
-
+(defun customize-org-headlines ()
+  (interactive)
+    (set-face-attribute 'org-level-1 nil :weight 'normal)
+    (set-face-attribute 'org-level-2 nil :weight 'normal)
+    (set-face-attribute 'org-level-3 nil :weight 'normal)
+    (set-face-attribute 'org-level-4 nil :weight 'normal)
+    (set-face-attribute 'org-level-5 nil :weight 'normal)
+    (set-face-attribute 'org-level-6 nil :weight 'normal)
+    (set-face-attribute 'org-level-7 nil :weight 'normal)
+    (set-face-attribute 'org-level-8 nil :weight 'normal)
+    (set-face-attribute 'org-meta-line nil :foreground "#708090")
+    (set-face-attribute 'org-document-info-keyword nil :foreground "#f5f5dc")
+    (set-face-attribute 'org-headline-done nil :foreground "#008b8b")
+    (set-face-attribute 'org-code nil :foreground "#6a5acd")
+    (setq org-latex-create-formula-image-program 'dvisvgm)
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
+)
 
 (defun increase-org-frag-mode-font-size ()
   (interactive)
@@ -236,7 +248,7 @@
         (goto-char reg-s)
         (forward-line -1)
         (insert (concat "#+BEGIN_SRC " a "\n")))
-)
+  )
 
 (setq display-line-numbers-type 'relative)
 ;; (setq opacity 95)
@@ -307,7 +319,7 @@
               (file+headline "~/org/reading.list.org" "inbox")
               "* %?")
              ))
-    (add-to-list 'org-capture-templates tpl))
+    (add-to-list 'org-capture-templates tpl)))
 
 (defun archive-all-done-tasks ()
   "Move all TODO headlines to a 'Done' heading with timestamp."
@@ -338,8 +350,25 @@
          "TODO")
         (save-buffer))))
 
-  )
 
+(defun org-archive-heading ()
+  (interactive)
+  (when (eq major-mode 'org-mode)
+      ((let ((archive "Archived"))
+        (save-excursion
+        (org-cut-subtree)
+
+        (goto-char (point-min))
+        (unless (org-find-exact-headline-in-buffer archive)
+            (goto-char (point-max))
+            (insert (format "* %s\n" archive)))
+
+        (org-goto-marker-or-bmk
+        (org-find-exact-headline-in-buffer archive))
+        (forward-line)
+        (org-paste-subtree))))))
+
+(define-key evil-normal-state-map (kbd "SPC v a") #'org-archive-vb-heading)
 ;; collect bullets to org-table
 
 (defun time-until (time)
@@ -544,7 +573,7 @@ TIME should be either a time value or a date-time string."
 
 (setq org-babel-python-command "python3")
 
-;; agentic
+;; ============ agentic ============
 (setq GEMINI_API_KEY (getenv "GEMINI_API_KEY"))
 (setq agent-shell-google-authentication
       (agent-shell-google-make-authentication :api-key GEMINI_API_KEY))
@@ -553,9 +582,17 @@ TIME should be either a time value or a date-time string."
 (setq agent-shell-qwen-authentication
       (agent-shell-qwen-make-authentication :login t))
 
-;; opencode
-;; (setq agent-shell-opencode-)
+;; goose
+(setq OPENROUTER_API_KEY (getenv "OPENROUTER_API_KEY"))
+(setq agent-shell-goose-authentication
+        (agent-shell-make-goose-authentication :openai-api-key OPENROUTER_API_KEY)) 
 
+;; misral
+(setq MISTRAL_API_KEY (getenv "MISTRAL_API_KEY"))
+(setq agent-shell-mistral-authentication
+      (agent-shell-mistral-make-authentication :api-key MISTRAL_API_KEY))
+
+;; ============ misc ============
 ;; timer
 (setq chronos-notification-wav "~/thirdparty/sounds/timer.wav")
 (add-hook! 'chronos-expiry-functions #'chronos-sound-notify #'chronos-desktop-notifications-notify)
@@ -563,12 +600,10 @@ TIME should be either a time value or a date-time string."
 ;; python
 ;; (setq lsp-disabled-clients '(pylsp))
 
-
 ;; misc
 ;; ==========
 (blink-cursor-mode t)
 (setq +zen-text-scale 1.1)
-(global-flycheck-mode 0)
 
 ;; fix W293 pylsp
 (defun fix-pylsp-W293-warning ()
@@ -607,6 +642,24 @@ TIME should be either a time value or a date-time string."
 (define-key evil-normal-state-map (kbd "SPC e l") #'avy-copy-line)
 (define-key evil-normal-state-map (kbd "SPC e r") #'avy-copy-region)
 (define-key evil-normal-state-map (kbd "SPC h r F") #'doom/set-font)
+;; (define-key evil-normal-state-map (kbd "SPC t F") #'(lambda ()
+;;                                                       (setq global-flycheck-mode
+;;                                                             (xor global-flycheck-mode t))))
+
+
+(define-key evil-normal-state-map (kbd "SPC p t")
+            #'(lambda ()
+                (interactive)
+                (org-capture-goto-target "pt")))
+
+(define-key evil-normal-state-map (kbd "SPC p n")
+            #'(lambda ()
+                (interactive)
+                (org-capture-goto-target "pn")))
+(define-key evil-normal-state-map (kbd "SPC z f") #'consult-flycheck)
+(define-key evil-normal-state-map (kbd "SPC z m") #'consult-man)
+(define-key evil-normal-state-map (kbd "SPC z g") #'consult-gh)
+(define-key evil-normal-state-map (kbd "SPC z i") #'consult-info)
 
 ;; magit/forge
 ;; (with-eval-after-load 'magit
@@ -614,3 +667,7 @@ TIME should be either a time value or a date-time string."
 (setq auth-sources '("~/.authinfo"))
 (setq-default vterm-shell "/usr/bin/fish")
 (setq-default explicit-shell-file-name "/usr/bin/fish")
+
+
+;; mail
+(autoload 'wl "wl" "Wanderlust" t)
