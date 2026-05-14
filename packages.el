@@ -53,6 +53,7 @@
 (package! 0x0)
 (package! ivy)
 (package! helm)
+(package! helpful)
 
 ;; agentic
 (package! shell-maker)
@@ -74,13 +75,18 @@
 (package! org-fragtog)
 (package! tikz)
 (package! elm-mode)
+(package! elm-yasnippets)
+(package! breadcrumb)
+(package! lorem-ipsum)
 
-;; productivity
+;; ergonoimics and productivity
 (package! org-gcal)
 (package! powerthesaurus)
 (package! org-roam)
 (package! org-roam-ui)
 (package! org-alert)
+(package! rg)
+(package! good-scroll)
 
 ;; light themes
 (package! aircon-theme)
@@ -95,6 +101,7 @@
 ;; dark themes
 (package! gruber-darker-theme)
 (package! dakrone-theme)
+(package! ef-themes)
 
 ;; gimmicks
 (package! dad-joke)

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: server action 
+# key: server.action/odoo
+# --
+<record id="$1" model="ir.actions.server">
+<field name="name">$2</field>
+<field name="model_id" ref="$3.model_$4"/>
+<field name="state">code</field>
+<field name="code">
+action = {
+'type': 'ir.actions.act_window',
+'res_model': '$5',
+'view_mode': 'form',
+'res_id': $6,
+}
+</field>
+</record>

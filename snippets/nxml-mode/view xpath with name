@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: view xpath with name
+# key: view-xpath/odoo
+# --
+<xpath expr="//$1[@name='$2']" position="$3">
+        $4
+</xpath>

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Numeric Field with UoM 
+# key: num-field-with-uom/odoo18 
+# --
+<div name="$1"  display="flex">
+    <label for="$1" string="$2"/>
+    <field name="$1" style="width:50px" />
+    <field name="$3" nolabel="1"/>
+</div>

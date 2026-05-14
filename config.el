@@ -12,7 +12,7 @@
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
 ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
 ;; - `doom-symbol-font' -- for symbols
@@ -31,31 +31,45 @@
 ;; CascdiaCode
 
 (setq home-dir "/home/dirichletian")
-(setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14)
-      doom-serif-font (font-spec :family "JetBrains Mono" :size 14)
-      doom-font (font-spec :family "CascadiaCode" :size 12))
+(setq default-font-size 10)
+(setq doom-variable-pitch-font (font-spec :family "RecMonoCasual Nerd Font" :size default-font-size)
+      doom-serif-font (font-spec :family "JetBrains Mono" :size default-font-size)
+      doom-font (font-spec :family "CascadiaCode" :size default-font-size))
 
-(setq doom-fontsets `("Fantasque Sans Mono"
-                       "Iosevka Term SS07"
-                       "Iosevka Fixed SS02"
-                       "Iosevka Fixed SS08"
-                       "Myna"
-                       "JetBrains Mono"
-                       "Hasklug Nerd Font"
-                       "Iosevka NFM"
-                       "Fira Code"
-                       "0x Proto Nerd Font"
-                       "Agave Nerd Font"
-                       "EnvyCodeR Nerd Font"
-                       "Monoid Nerd Font Mono"
-                       "Monaspace Argon Var"
-                       "Monaspace Xenon Var"
-                       "CascadiaCode"))
+(setq doom-fontsets `("0x Proto Nerd Font"
+                      "Agave Nerd Font"
+                      "Cascadia Code PL"
+                      "CascadiaCode"
+                      "Caskaydia Cove NF"
+                      "Fantasque Sans Mono"
+                      "Fira Code"
+                      "Fira Code"
+                      "Hasklug Nerd Font"
+                      "Hurmit Nerd Font"
+                      "Hurmit Nerd Font"
+                      "IntoneMono NF"
+                      "Iosevka Comfy Duo"
+                      "Iosevka Fixed SS07"
+                      "Iosevka Fixed SS08"
+                      "Iosevka Fixed SS10"
+                      "Iosevka Fixed SS16"
+                      "Iosevka Fixed SS18"
+                      "JetBrains Mono NL"
+                      "JetBrains Mono"
+                      "M+1Code Nerd Font Propo"
+                      "M+1Code Nerd Font"
+                      "RecMonoDuotone Nerd Font"
+                      "RecMonoLinear Nerd Font Propo"
+                      "RecMonoLinear Nerd Font"
+                      "Source Code Pro"
+                      "Ubuntu Mono"
+                      "ZedMono NFP"
+                       ))
 
 (defun doom/set-font ()
   (interactive)
   (let* ((font-name (completing-read "Select Font: " doom-fontsets nil 'confirm)))
-  (setq doom-font (font-spec :family font-name :size 10 :weight 'Regular)))
+  (setq doom-font (font-spec :family font-name :size default-font-size :weight 'Regular)))
   (doom-init-fonts-h 'reload)
  )
 
@@ -95,21 +109,23 @@
 ;; (setq light-theme 'hemera)
 ;; (setq light-theme 'dakrone-light)
 ;; (setq light-theme 'parchment)
-(setq light-theme 'modus-operandi-tritanopia)
+(setq light-theme 'gruber-darker)
 
 ;; (setq dark-theme 'doom-wilmersdorf)
 ;; (setq dark-theme 'dakrone)
 ;; (setq dark-theme 'doom-monokai-machine)
 ;; (setq dark-theme 'doom-monokai-octagon)
 ;; (setq dark-theme 'kaolin-dark)
-(setq dark-theme 'kaolin-mono-dark)
+(setq dark-theme 'gruber-darker)
 
 
-(let ((time-now (string-to-number (format-time-string "%H" (current-time)))))
- (if (> (mod (- time-now 6) 24) 12) ;; 19 - 06 use dark mode
-     (setq doom-theme dark-theme)
-   (setq doom-theme light-theme)
-))
+;; (let ((time-now (string-to-number (format-time-string "%H" (current-time)))))
+;;  (if (> (mod (- time-now 6) 24) 12) ;; 19 - 06 use dark mode
+;;      (setq doom-theme dark-theme)
+;;    (setq doom-theme light-theme)
+;; ))
+                                        ;
+(ef-themes-load-random)
 
 
 (defun customize-dired-theme (theme color)
@@ -131,7 +147,7 @@
 
   (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal))
 
-;; (customize-dired-theme 'gruber-darker "#708090")
+(customize-dired-theme 'gruber-darker "#708090")
 ;; (customize-dired-theme 'hemera "#000000")
 (customize-dired-theme 'dakrone-light "#007700")
 
@@ -176,6 +192,7 @@
   ;; (setq org-bullets-bullet-list '(">" "⮞" "🟄" "⪢")))
   (setq org-bullets-bullet-list '(">" ">" ">" ">")))
 
+
 ;; c-lsp
 (after! c-ts-mode
   (setq major-mode-remap-alist '((c-mode . c-ts-mode))))
@@ -209,7 +226,12 @@
     (set-face-attribute 'org-code nil :foreground "#6a5acd")
     (setq org-latex-create-formula-image-program 'dvisvgm)
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
-)
+    )
+
+(after! org
+    (customize-org-headlines))
+
+(add-hook! 'doom-load-theme-hook #'customize-org-headlines)
 
 (defun increase-org-frag-mode-font-size ()
   (interactive)
@@ -354,7 +376,7 @@
 (defun org-archive-heading ()
   (interactive)
   (when (eq major-mode 'org-mode)
-      ((let ((archive "Archived"))
+      (let ((archive "Archived"))
         (save-excursion
         (org-cut-subtree)
 
@@ -366,9 +388,9 @@
         (org-goto-marker-or-bmk
         (org-find-exact-headline-in-buffer archive))
         (forward-line)
-        (org-paste-subtree))))))
+        (org-paste-subtree)))))
 
-(define-key evil-normal-state-map (kbd "SPC v a") #'org-archive-vb-heading)
+(define-key evil-normal-state-map (kbd "SPC v a") #'org-archive-heading)
 ;; collect bullets to org-table
 
 (defun time-until (time)
@@ -497,6 +519,8 @@ TIME should be either a time value or a date-time string."
   (interactive)
   (evil-ex "%s/attrs=\"\\{'\\(.*\\)': \\[('\\(.*\\)', '\\(.*\\)', \\(.*\\))\\]\\}\"/\\1=\"\\2 \\3 \\4\"/g"))
 
+(add-hook! 'nxml-mode-hook #'hs-hide-all)
+(add-hook! 'css-mode-hook #'hs-hide-all)
 
 ;; Custom Key Bindings
 ;; ace-window
@@ -563,7 +587,12 @@ TIME should be either a time value or a date-time string."
 
   (setq projectile-globally-ignored-directories
         (append '("node_modules" ".git" ".vscode" "dist" "build" ".cache")
-                projectile-globally-ignored-directories)))
+                projectile-globally-ignored-directories))
+
+  (setq projectile-project-root-files-bottom-up
+        (append '("package.json" "pyproject.toml")
+                projectile-project-root-files-bottom-up))
+  )
 
 ;; for literate programming
 (after! org
@@ -605,6 +634,7 @@ TIME should be either a time value or a date-time string."
 (blink-cursor-mode t)
 (setq +zen-text-scale 1.1)
 
+
 ;; fix W293 pylsp
 (defun fix-pylsp-W293-warning ()
   (interactive)
@@ -635,10 +665,15 @@ TIME should be either a time value or a date-time string."
 
 (define-key evil-normal-state-map (kbd "SPC i n") #'fix-noqa) 
 (define-key evil-normal-state-map (kbd "SPC i g") #'golden-ratio-mode)
+(define-key evil-normal-state-map (kbd "SPC i l s") #'lorem-ipsum-insert-sentences)
+(define-key evil-normal-state-map (kbd "SPC i l p") #'lorem-ipsum-insert-paragraphs)
+(define-key evil-normal-state-map (kbd "SPC i l l") #'lorem-ipsum-insert-list)
+
 (define-key evil-insert-state-map (kbd "C-x C-s") #'save-buffer)
 (define-key evil-insert-state-map (kbd "C-S-f") #'forward-line)
 (define-key evil-insert-state-map (kbd "C-S-b") #'ibuffer-backward-line)
 (define-key evil-normal-state-map (kbd "SPC e e d") #'powerthesaurus-hydra/powerthesaurus-lookup-definitions-dwim-and-exit)
+(define-key evil-normal-state-map (kbd "SPC e e s") #'powerthesaurus-hydra/powerthesaurus-lookup-sentences-dwim-and-exit)
 (define-key evil-normal-state-map (kbd "SPC e l") #'avy-copy-line)
 (define-key evil-normal-state-map (kbd "SPC e r") #'avy-copy-region)
 (define-key evil-normal-state-map (kbd "SPC h r F") #'doom/set-font)
@@ -660,6 +695,10 @@ TIME should be either a time value or a date-time string."
 (define-key evil-normal-state-map (kbd "SPC z m") #'consult-man)
 (define-key evil-normal-state-map (kbd "SPC z g") #'consult-gh)
 (define-key evil-normal-state-map (kbd "SPC z i") #'consult-info)
+(define-key evil-motion-state-map (kbd "C-u") #'good-scroll-down)
+(define-key evil-motion-state-map (kbd "C-d") #'good-scroll-up)
+(define-key evil-motion-state-map (kbd "C-f") #'good-scroll-down-full-screen)
+(define-key evil-motion-state-map (kbd "C-b") #'good-scroll-up-full-screen)
 
 ;; magit/forge
 ;; (with-eval-after-load 'magit

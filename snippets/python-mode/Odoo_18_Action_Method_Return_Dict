@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Odoo 18 Action Method Return Dict 
+# key: action-method/odoo18
+# --
+{
+'type': 'ir.actions.act_window',
+'name': _('$1'),
+'res_model': '$2',
+'view_mode': 'list,form',
+'domain': [$3],
+'target': '$4',
+}

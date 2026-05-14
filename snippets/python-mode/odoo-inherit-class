@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: odoo-inherit-class
+# key: odoo-inherit-class/odoo18
+# --
+from odoo import api, fields, models
+from odoo.exceptions import UserError
+
+
+class $1(models.Model):
+
+    _inherit = "$2.$3"

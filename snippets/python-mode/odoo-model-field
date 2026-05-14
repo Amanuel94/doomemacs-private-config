@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: odoo-model-field 
+# key: odoo-model-field/odoo18
+# --
+
+    $1 = fields.$2(string=$3) 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: add filter domain  
+# key: odoo/view/search/filter_domain 
+# --
+<field string="$1" name="$2" filter_domain="[('$3', '>=', self)]"/>
