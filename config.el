@@ -36,40 +36,38 @@
       doom-serif-font (font-spec :family "JetBrains Mono" :size default-font-size)
       doom-font (font-spec :family "CascadiaCode" :size default-font-size))
 
-(setq doom-fontsets `("0x Proto Nerd Font"
-                      "Agave Nerd Font"
-                      "Cascadia Code PL"
-                      "CascadiaCode"
-                      "Caskaydia Cove NF"
-                      "Fantasque Sans Mono"
-                      "Fira Code"
-                      "Fira Code"
-                      "Hasklug Nerd Font"
-                      "Hurmit Nerd Font"
-                      "Hurmit Nerd Font"
-                      "IntoneMono NF"
-                      "Iosevka Comfy Duo"
-                      "Iosevka Fixed SS07"
-                      "Iosevka Fixed SS08"
-                      "Iosevka Fixed SS10"
-                      "Iosevka Fixed SS16"
-                      "Iosevka Fixed SS18"
-                      "JetBrains Mono NL"
-                      "JetBrains Mono"
-                      "M+1Code Nerd Font Propo"
-                      "M+1Code Nerd Font"
-                      "RecMonoDuotone Nerd Font"
-                      "RecMonoLinear Nerd Font Propo"
-                      "RecMonoLinear Nerd Font"
-                      "Source Code Pro"
-                      "Ubuntu Mono"
-                      "ZedMono NFP"
+(setq doom-fontsets `(("0x Proto Nerd Font" . Regular)
+                      ("Agave Nerd Font" . Regular)
+                      ("Cascadia Code PL" . Regular)
+                      ("CascadiaCode" . Light)
+                      ("Caskaydia Cove NF" . Light)
+                      ("Fantasque Sans Mono" . Light)
+                      ("Fira Code" . Regular)
+                      ("Hasklug Nerd Font" . Regular)
+                      ("Hurmit Nerd Font" . Light)
+                      ("IntoneMono NF" . Regular)
+                      ("Iosevka Comfy Duo" . Regular)
+                      ("Iosevka Fixed SS07" . Regular)
+                      ("Iosevka Fixed SS08" . Regular)
+                      ("Iosevka Fixed SS10" . Regular)
+                      ("Iosevka Fixed SS16" . Regular)
+                      ("Iosevka Fixed SS18" . Regular)
+                      ("JetBrains Mono NL" . Light)
+                      ("JetBrains Mono" . Regular)
+                      ("M+1Code Nerd Font Propo" . Regular)
+                      ("M+1Code Nerd Font" . Regular)
+                      ("RecMonoDuotone Nerd Font" . Light)
+                      ("RecMonoLinear Nerd Font Propo" . Light)
+                      ("RecMonoLinear Nerd Font" . Light)
+                      ("Source Code Pro" . Regular)
+                      ("Ubuntu Mono" . Regular)
+                      ("ZedMono NFP" . Regular)
                        ))
 
 (defun doom/set-font ()
   (interactive)
-  (let* ((font-name (completing-read "Select Font: " doom-fontsets nil 'confirm)))
-  (setq doom-font (font-spec :family font-name :size default-font-size :weight 'Regular)))
+  (let* ((font-name (completing-read "Select Font: " (-map #'car doom-fontsets) nil 'confirm)))
+  (setq doom-font (font-spec :family font-name :size default-font-size :weight (cdr (assoc font-name doom-fontsets)))))
   (doom-init-fonts-h 'reload)
  )
 

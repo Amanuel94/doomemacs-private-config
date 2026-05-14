@@ -86,7 +86,7 @@
 (package! org-roam-ui)
 (package! org-alert)
 (package! rg)
-(package! good-scroll)
+(package! good-scroll
 
 ;; light themes
 (package! aircon-theme)
