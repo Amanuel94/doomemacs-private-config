@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no_create_option_odoo 
+# key: no_create_option_odoo
+# --
+options="{'no_create_edit': 1, 'no_quick_create': 1}"

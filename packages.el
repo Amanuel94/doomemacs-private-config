@@ -54,12 +54,15 @@
 (package! ivy)
 (package! helm)
 (package! helpful)
+(package! load-env-vars)
+(package! dashboard)
 
 ;; agentic
 (package! shell-maker)
 (package! acp :recipe (:host github :repo "xenodium/acp.el"))
 (package! agent-shell :recipe (:host github :repo "xenodium/agent-shell"))
-(package! gptel)
+;;(package! gptel)
+
 
 ;; math 
 (package! sage-shell-mode)
@@ -78,6 +81,14 @@
 (package! elm-yasnippets)
 (package! breadcrumb)
 (package! lorem-ipsum)
+(package! lua-mode)
+(package! yaml-mode)
+(package! yaml-pro)
+(package! xml-format)
+(package! xml+)
+(package! vterm)
+(package! csv)
+(package! csv-mode)
 
 ;; ergonoimics and productivity
 (package! org-gcal)
@@ -86,30 +97,30 @@
 (package! org-roam-ui)
 (package! org-alert)
 (package! rg)
-(package! good-scroll
+(package! good-scroll)
 
 ;; light themes
-(package! aircon-theme)
-(package! dakrone-light-theme)
-(package! hemera-theme)
-(package! silkworm-theme)
-(package! kaolin-themes)
-(package! doric-themes)
-(package! brutalist-theme)
-(package! eclipse-theme)
+; (package! aircon-theme)
+; (package! dakrone-light-theme)
+; (package! hemera-theme)
+; (package! silkworm-theme)
+; (package! kaolin-themes)
+; (package! doric-themes)
+; (package! brutalist-theme)
+; (package! eclipse-theme)
 
 ;; dark themes
-(package! gruber-darker-theme)
-(package! dakrone-theme)
+; (package! gruber-darker-theme)
+; (package! dakrone-theme)
 (package! ef-themes)
 
 ;; gimmicks
-(package! dad-joke)
-(package! golden-ratio)
-(package! evil-tutor)
+; (package! dad-joke)
+; (package! golden-ratio)
+; (package! evil-tutor)
 
 ;; leetcode
-(package! leetcode)
+; (package! leetcode)
 (package! ligature)
 
 ;; git

@@ -1,0 +1,6 @@
+# key: inherit-update-attrs-odoo
+# name: inherit-update-attrs-odoo
+# --
+    <field name="$1" position="attributes">
+        <attribute name="$2">$3</attribute>
+    </field>

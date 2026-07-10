@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: create odoo orm
+# uuid: create_odoo
+# key: create_odoo
+# group: odoo
+# condition: t
+# --
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            $1
+
+        return super().craate(vals_list)

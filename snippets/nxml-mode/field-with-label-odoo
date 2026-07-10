@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: field-with-label-in-row-odoo
+# uuid: 
+# key: field-with-label-in-row-odoo
+# condition: t
+# --
+
+        <label for="$1"/>
+        <div class="o_row">
+            <field name="$1"/>
+            <field name="$2" placeholder="$3" options="{&quot;no_open&quot;: True}"/>
+        </div>
+      </field>

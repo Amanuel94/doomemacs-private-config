@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: inherit field
+# uuid: inherit field
+# key: inherit field
+# group: odoo
+# condition: t
+# --
+
+<field name="inherit_id" ref="$1.$2"/>

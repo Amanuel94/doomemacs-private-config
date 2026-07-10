@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: compute-field-method-odoo 
+# uuid: 
+# key: compute-field-method-odoo
+# condition: t
+# --
+
+    ${1:field_name} = fields.${2:field_type}(string="${3:field_string}", compute="_compute_$1")
+
+    @api.depends(${4:dependency_field_name})
+    def _compute_$1(self):
+        for ${5:record} in self:
+            $5.$1 = $6

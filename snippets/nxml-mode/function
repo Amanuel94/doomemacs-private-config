@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: function-domain
+# uuid: 
+# key: function-domain/odoo
+# condition: t
+# --
+
+  <function model="$1" name="$2">
+    <function eval="[[('$3', '$4', $5)]]" model="$1$" name="search" />
+  </function>

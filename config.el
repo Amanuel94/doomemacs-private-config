@@ -30,44 +30,61 @@
 ;; Hasklug Nerd Font
 ;; CascdiaCode
 
-(setq home-dir "/home/dirichletian")
-(setq default-font-size 10)
+(setq default-font-size 11)
 (setq doom-variable-pitch-font (font-spec :family "RecMonoCasual Nerd Font" :size default-font-size)
       doom-serif-font (font-spec :family "JetBrains Mono" :size default-font-size)
       doom-font (font-spec :family "CascadiaCode" :size default-font-size))
 
-(setq doom-fontsets `(("0x Proto Nerd Font" . Regular)
-                      ("Agave Nerd Font" . Regular)
-                      ("Cascadia Code PL" . Regular)
-                      ("CascadiaCode" . Light)
-                      ("Caskaydia Cove NF" . Light)
-                      ("Fantasque Sans Mono" . Light)
-                      ("Fira Code" . Regular)
-                      ("Hasklug Nerd Font" . Regular)
-                      ("Hurmit Nerd Font" . Light)
-                      ("IntoneMono NF" . Regular)
-                      ("Iosevka Comfy Duo" . Regular)
-                      ("Iosevka Fixed SS07" . Regular)
-                      ("Iosevka Fixed SS08" . Regular)
-                      ("Iosevka Fixed SS10" . Regular)
-                      ("Iosevka Fixed SS16" . Regular)
-                      ("Iosevka Fixed SS18" . Regular)
-                      ("JetBrains Mono NL" . Light)
-                      ("JetBrains Mono" . Regular)
-                      ("M+1Code Nerd Font Propo" . Regular)
-                      ("M+1Code Nerd Font" . Regular)
-                      ("RecMonoDuotone Nerd Font" . Light)
-                      ("RecMonoLinear Nerd Font Propo" . Light)
-                      ("RecMonoLinear Nerd Font" . Light)
-                      ("Source Code Pro" . Regular)
-                      ("Ubuntu Mono" . Regular)
-                      ("ZedMono NFP" . Regular)
+(setq doom-fontsets `(("0x Proto Nerd Font" . ((weight . Regular) (width . normal)))
+                      ("Agave Nerd Font" . ((weight . Regular) (width . normal)))
+                      ("CamingoCode" . ((weight . Regular) (width . normal)))
+                      ("Cascadia Code PL" . ((weight . Regular) (width . normal)))
+                      ("CascadiaCode" . ((weight . Light) (width . normal)))
+                      ("Caskaydia Cove NF" . ((weight . Light) (width . normal)))
+                      ("Commit Mono" . ((weight . Regular) (width . normal)))
+                      ("Fantasque Sans Mono" . ((weight . Light) (width . normal)))
+                      ("Fira Code" . ((weight . Regular) (width . normal)))
+                      ("Go Mono" . ((weight . Regular) (width . normal)))
+                      ("Hasklig" . ((weight . Regular) (width . normal)))
+                      ("Hasklug Nerd Font" . ((weight . Regular) (width . ultra-condensed)))
+                      ("Hurmit Nerd Font" . ((weight . Light) (width . normal)))
+                      ("IntoneMono NF" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Comfy Duo" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Comfy Wide Motion Fixed" . ((weight . Regular) (width . expanded)))
+                      ("Iosevka Fixed SS07" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS08" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS10" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS12" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS14" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS16" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Fixed SS18" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Term SS09" . ((weight . Regular) (width . normal)))
+                      ("Iosevka Term SS16" . ((weight . Regular) (width . normal)))
+                      ("JetBrains Mono NL" . ((weight . Light) (width . normal)))
+                      ("JetBrains Mono" . ((weight . Regular) (width . normal)))
+                      ("Lekton" . ((weight . Regular) (width . normal)))
+                      ("M+1Code Nerd Font Propo" . ((weight . Regular) (width . expanded)))
+                      ("M+1Code Nerd Font" . ((weight . Regular) (width . expanded)))
+                      ("Operator Mono" . ((weight . Regular) (width . normal)))
+                      ("Operator Mono Lig" . ((weight . Regular) (width . normal)))
+                      ("RecMonoDuotone Nerd Font" . ((weight . Light) (width . normal)))
+                      ("RecMonoLinear Nerd Font Propo" . ((weight . Light) (width . normal)))
+                      ("RecMonoLinear Nerd Font" . ((weight . Light) (width . normal)))
+                      ("Recursive Mono Linear Static" . ((weight . Light) (width . normal)))
+                      ("Source Code Pro" . ((weight . Regular) (width . normal)))
+                      ("Ubuntu Mono" . ((weight . Regular) (width . normal)))
+                      ("ZedMono NFP" . ((weight . Regular) (width . normal)))
                        ))
 
 (defun doom/set-font ()
   (interactive)
   (let* ((font-name (completing-read "Select Font: " (-map #'car doom-fontsets) nil 'confirm)))
-  (setq doom-font (font-spec :family font-name :size default-font-size :weight (cdr (assoc font-name doom-fontsets)))))
+    (setq doom-font (font-spec :family font-name
+                               :size default-font-size
+                               :weight (cdr (assoc
+                                             'weight (cdr (assoc font-name doom-fontsets))))
+                               :width (cdr (assoc
+                                                'width (cdr (assoc font-name doom-fontsets)))))))
   (doom-init-fonts-h 'reload)
  )
 
@@ -123,7 +140,8 @@
 ;;    (setq doom-theme light-theme)
 ;; ))
                                         ;
-(ef-themes-load-random)
+(setq doom-theme 'ef-dark)
+
 
 
 (defun customize-dired-theme (theme color)
@@ -142,8 +160,8 @@
    `(diredfl-file-name :foreground unspecified)
    `(diredfl-dir-heading :underline unspecified)
    `(diredfl-dir-priv :foreground unspecified))
-
-  (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal))
+(after! doom-dashboard
+  (set-face-attribute 'doom-dashboard-menu-title nil :weight 'normal)))
 
 (customize-dired-theme 'gruber-darker "#708090")
 ;; (customize-dired-theme 'hemera "#000000")
@@ -182,6 +200,7 @@
 (require 'acp)
 (require 'agent-shell)
 (require 'org-gcal)
+(require 'elfeed)
 
 (use-package org-bullets
   :load-path "~/.config/doom/lisp/"
@@ -547,7 +566,7 @@ TIME should be either a time value or a date-time string."
             (aw-switch-to-window (aw-select nil))
             (call-interactively (symbol-function ',fn)))))))
 
- (define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
+(define-key embark-file-map     (kbd "o") (my/embark-ace-action find-file))
  (define-key embark-buffer-map   (kbd "o") (my/embark-ace-action switch-to-buffer))
  (define-key embark-bookmark-map (kbd "o") (my/embark-ace-action bookmark-jump))
 )
@@ -631,8 +650,8 @@ TIME should be either a time value or a date-time string."
 ;; ==========
 (blink-cursor-mode t)
 (setq +zen-text-scale 1.1)
-
-
+(setq +lookup-provider-url-alist (cons '("ChatGPT" "https://chatgpt.com?q=%s") +lookup-provider-url-alist))
+(setq +lookup-provider-url-alist (cons '("Odoo 18 Docs" "https://www.odoo.com/documentation/18.0/search.html?q=%s&area=default&check_keywords=yes") +lookup-provider-url-alist))
 ;; fix W293 pylsp
 (defun fix-pylsp-W293-warning ()
   (interactive)
@@ -689,14 +708,30 @@ TIME should be either a time value or a date-time string."
             #'(lambda ()
                 (interactive)
                 (org-capture-goto-target "pn")))
+(after! magit
+    (define-key magit-status-mode-map (kbd "SPC p t")
+                #'(lambda ()
+                    (interactive)
+                    (org-capture-goto-target "pt")))
+
+    (define-key magit-status-mode-map  (kbd "SPC p n")
+                #'(lambda ()
+                    (interactive)
+                    (org-capture-goto-target "pn"))))
 (define-key evil-normal-state-map (kbd "SPC z f") #'consult-flycheck)
 (define-key evil-normal-state-map (kbd "SPC z m") #'consult-man)
 (define-key evil-normal-state-map (kbd "SPC z g") #'consult-gh)
 (define-key evil-normal-state-map (kbd "SPC z i") #'consult-info)
-(define-key evil-motion-state-map (kbd "C-u") #'good-scroll-down)
-(define-key evil-motion-state-map (kbd "C-d") #'good-scroll-up)
-(define-key evil-motion-state-map (kbd "C-f") #'good-scroll-down-full-screen)
-(define-key evil-motion-state-map (kbd "C-b") #'good-scroll-up-full-screen)
+
+(good-scroll-mode 1)
+(define-key evil-motion-state-map (kbd "C-e") #'good-scroll-down)
+(define-key evil-motion-state-map (kbd "C-y") #'good-scroll-up)
+(define-key evil-motion-state-map (kbd "C-u") #'evil-scroll-page-up)
+(define-key evil-motion-state-map (kbd "C-d") #'evil-scroll-page-down)
+(define-key evil-motion-state-map (kbd "C-f") #'good-scroll-up-full-screen)
+(define-key evil-motion-state-map (kbd "C-b") #'good-scroll-down-full-screen)
+(after! 'nxml-mode
+    (define-key nxml-mode-map (kbd "C-c f") #'xml-format-buffer))
 
 ;; magit/forge
 ;; (with-eval-after-load 'magit
@@ -705,6 +740,67 @@ TIME should be either a time value or a date-time string."
 (setq-default vterm-shell "/usr/bin/fish")
 (setq-default explicit-shell-file-name "/usr/bin/fish")
 
+(define-key evil-motion-state-map (kbd "C-c C-l C-l") #'forge-copy-url-at-point-as-kill)
+
 
 ;; mail
-(autoload 'wl "wl" "Wanderlust" t)
+(add-to-list 'load-path "~/.config/emacs/lisp/mu4e/")
+(set-email-account! "gmail"
+  '((mu4e-sent-folder       . "/gmail/Sent")
+    (mu4e-drafts-folder     . "/gmail/Drafts")
+    (mu4e-trash-folder      . "/gmail/Trash")
+    (mu4e-refile-folder     . "/gmail/All Mail")
+    (smtpmail-smtp-user     . "amanueltewodros94@gmail.com")
+    (user-mail-address      . "amanueltewodros94@gmail.com")
+    (smtpmail-smtp-server   . "smtp.gmail.com")
+    (smtpmail-smtp-service  . 587)
+    (smtpmail-stream-type   . starttls)
+    (mu4e-compose-signature . "Amanuel Tewodros Getachew"))
+  t) 
+(setq mu4e-update-interval 300)
+
+
+;; dashboard widgets
+(after! elfeed
+  ;; "https://nullprogram.com/feed/"
+  ;; "https://andrewkelley.me/rss.xml"
+  ;; "https://geohot.github.io/blog/feed.xml"
+  ;; "https://terrytao.wordpress.com/feed"
+
+    (defun dashboard-widget-elfeed ()
+      (let* ((elfeed-filter-query "@1month +unread"))
+        (setq elfeed-search-filter elfeed-filter-query)
+        (elfeed-search--update-list) 
+        (+dashboard-insert ""
+         (propertize "Elfeed Update" 'face '+dashboard-menu-title))
+         (dolist (entry elfeed-search-entries)
+          (pcase-let
+              ((`(,title . _) (elfeed-search--column-title entry))
+               (`(,date . _) (elfeed-search--column-date entry))
+               (feed (elfeed-search--column-feed entry)))
+            (when-let* ((action (lambda (_) (elfeed-search-show-entry entry)))
+                        (entry-display
+                         (format "%-10s%-60s%20s  %10s"
+                                 (format-time-string "%b, %d"
+                                                     (date-to-time date))
+                                 (if (< (string-width title) 60)
+                                     (format "%s..." (substring title 0 57))
+                                   title)
+                                 (or feed "")
+                                 (format
+                                  (with-temp-buffer
+                                    (insert-text-button " Read"
+                                                        'action action
+                                                        'face '+dashboard-menu-title
+                                                        'follow-link t
+                                                        'help-echo "")
+                                    (format "%s" (buffer-string)))))))
+              (+dashboard-insert (or entry-display "")))))
+         (when (or (eq elfeed-search-entries nil) (eq (length elfeed-search-entries) 0))
+             (+dashboard-insert "Nothing new from you feeds :("))))
+
+    (setq +dashboard-functions
+          '(+dashboard-widget-banner
+            dashboard-widget-elfeed)))
+    
+

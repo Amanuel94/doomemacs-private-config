@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: record-set
+# uuid: 
+# key: record-set/odoo
+# condition: t
+# --
+    self.env[$1]

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: backend_asset
+# uuid: 
+# key: backend_asset/odoo
+# condition: t
+# --
+    'assets': {
+        'web.assets_backend': [
+            'sale_approval/static/src/js/**/*',
+        ],
+    },

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: compute odoo
+# uuid: compute odoo 
+# key: compute odoo
+# group: odoo
+# condition: t
+# --
+@api.depends('$1')
+def _compute_$2(self):
+    for ${3:record} in self:
+        $4

@@ -1,0 +1,6 @@
+# key: inherit-insert-after-odoo
+# name: inherit-insert-after-odoo
+# --
+    <field name="$1" position="after">
+        <field name="$2" />
+    </field>

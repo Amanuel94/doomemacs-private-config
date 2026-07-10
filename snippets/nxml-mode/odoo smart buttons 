@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: odoo smart buttons
+# uuid: odoo smart buttons
+# key: odoo smart buttons
+# group: odoo
+# condition: t
+# --
+<div name="button_box" class="oe_button_box">
+    <button name="action_${1:name}"
+            type="object"
+            class="oe_stat_button"
+            icon="fa-${2:circle}"
+            invisible="${3:condition}">
+        <field name="$4" widget="statinfo" string="$5"/>
+    </button>
+</div>

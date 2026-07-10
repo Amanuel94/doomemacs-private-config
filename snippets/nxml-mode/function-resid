@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: function-ref
+# uuid: 
+# key: function-ref/odoo
+# condition: t
+# --
+
+  <function model="$1" name="$2" eval="[[ref('$3')]]"/>

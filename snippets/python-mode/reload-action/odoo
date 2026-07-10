@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: reload-action
+# uuid: 
+# key: reload-action/odoo
+# condition: t
+# --
+        return {"type": "ir.actions.client", "tag": "reload"}
